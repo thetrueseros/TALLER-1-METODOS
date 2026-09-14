@@ -1,5 +1,5 @@
 import numpy as np 
-import simpy as sp 
+import sympy as sp 
 
 def EjecutarNewton():
     print("wip newton")
