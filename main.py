@@ -8,7 +8,8 @@ def Ejecutar():
                     "2. Método del punto fijo\n"
                     "3. Método de Newton\n"
                     "4. Salir.\n")
-    
+    entrada.strip()
+
     # Si el input no es un número del 1 al 3
     if not entrada.isdigit() or int(entrada) < 1 or int(entrada) > 4:
         input("Entrada inválida. Presione enter para regresar.")
