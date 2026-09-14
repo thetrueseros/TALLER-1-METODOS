@@ -1,0 +1,11 @@
+# Entorno virtual
+.venv/
+
+# Carpetas de compilación
+build/
+dist/
+*.spec
+
+# Temps
+__pycache__/
+*.pyc
