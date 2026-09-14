@@ -121,41 +121,41 @@ Ambos módulos utilizan la librería `SymPy` configurada con **multiplicación i
 4. **Salida:** Muestra la tabla con las columnas: `Iter (n)`, `P_n-1`, `P_n = g(P_n-1)` y `Error Absoluto`.
 
 ## 4. Flujo del proyecto
+```mermaid
 flowchart TD
+    linkStyle default interpolate stepafter
+
     Start([Inicio]) --> Menu[Mostrar Menú Principal: main.py]
     Menu --> Option{Seleccionar Opción}
 
-    %% Opción 1: Bisección
     Option -- "1" --> Bis[Ejecutar Bisección: biseccion.py]
-    Bis --> InBis[Ingresar f(x), a, b, tol, max_iter]
-    InBis --> ChkBol{¿f(a) * f(b) < 0?}
-    ChkBol -- No --> ErrBol[Error: No hay cambio de signo / Cancela]
+    Bis --> InBis["Ingresar f(x), a, b, tol, max_iter"]
+    InBis --> ChkBol{"¿f(a) * f(b) < 0?"}
+    ChkBol -- No --> ErrBol["Error: No hay cambio de signo / Cancela"]
     ErrBol --> Menu
-    ChkBol -- Sí --> LoopBis[Bucle de Iteraciones: p = a+b/2]
+    ChkBol -- Sí --> LoopBis["Bucle de Iteraciones: p = (a+b)/2"]
     LoopBis --> TabBis[Generar Tabla con tabulate]
     TabBis --> Menu
 
-    %% Opción 2: Punto Fijo
     Option -- "2" --> PF[Ejecutar Punto Fijo: puntofijo.py]
-    PF --> InPF[Ingresar g(x), a, b, P0, tol]
-    InPF --> ChkAuto{¿g(x) en a,b?}
+    PF --> InPF["Ingresar g(x), a, b, P0, tol"]
+    InPF --> ChkAuto{"¿g(x) en [a,b]?"}
     ChkAuto -- No --> WarnAuto[Alerta: No automapea]
-    ChkAuto -- Sí --> CalcK[Calcular k = max|g'x| con SymPy]
+    ChkAuto -- Sí --> CalcK["Calcular k = max|g'(x)| con SymPy"]
     WarnAuto --> CalcK
-    CalcK --> ChkK{¿k < 1?}
-    ChkK -- No --> ErrK[Error: k >= 1 / Divergencia]
+    CalcK --> ChkK{"¿k < 1?"}
+    ChkK -- No --> ErrK["Error: k >= 1 / Divergencia"]
     ErrK --> Menu
     ChkK -- Sí --> CalcN[Calcular n teórico de iteraciones]
-    CalcN --> LoopPF[Bucle de Iteraciones: Pn = g Pn-1]
+    CalcN --> LoopPF["Bucle de Iteraciones: P_n = g(P_n-1)"]
     LoopPF --> TabPF[Generar Tabla de Iteraciones]
     TabPF --> Menu
 
-    %% Opción 3: Newton
     Option -- "3" --> New[Ejecutar Newton: newton.py]
     New --> MsgWIP[Imprimir: wip newton]
     MsgWIP --> Menu
 
-    %% Opción 4: Salir
     Option -- "4" --> Conf{¿Confirmar Salir?}
     Conf -- Sí --> End([Fin del Programa])
     Conf -- No --> Menu
+```
