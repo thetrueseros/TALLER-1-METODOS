@@ -1,11 +1,10 @@
 import numpy as np 
 import os
 import sympy as sp 
+from sympy.parsing.sympy_parser import parse_expr as pexpr, standard_transformations as strans, implicit_multiplication_application as ima
 from tabulate import tabulate as t
 
 def EjecutarBiseccion():
-
-
     x = sp.Symbol('x')
     
     LimpiarConsola()
@@ -15,19 +14,21 @@ def EjecutarBiseccion():
                     "multipl.: *                 división: /\n"
                     "potencia: **                raiz cuad.: sqrt()\n"
                     "trig: sin(), cos(), tan()   log. nat.: log()\n"
-                    "exponencial: exp()\n\n"
-                    "Consideraciones: No olvide usar paréntesis y, en especial, utilice " 
-                    "el símbolo de multiplicación para escribir cosas como 3x, 2x⁵, etc. (ejemplo: 3*x, 2*x**5). "
+                    "exponencial: exp()\n"
+                    "Ejemplo de función: 2x**3+5x+8. Notese cómo no hay necesidad de poner asterisco al multiplicar 2x y 5x.\n\n"
+                    "Consideraciones: No olvide usar paréntesis.\n"
                     "Si necesita modificar algo, debe borrar.\n"
                     "f(x) = ")
     
     try:
-        # convertir texto a expresión de sympy
-        expresion = sp.sympify(funcion)
+        # traductor de multiplicaciones implícitas
+        transformaciones=strans + (ima,)
+        # convertir (parse)
+        expresion = pexpr(funcion, transformations=transformaciones)
         # Convertir a función evaluable
         f=sp.lambdify(x, expresion, 'numpy')
     except Exception as e:
-        print("Error: la expresión ingresada no es válida. ", e)
+        print(f"Error al leer la función: {e}")
         return
 
     # datos del usuario
@@ -117,4 +118,3 @@ def PedirNumero(mensaje):
             return float(entrada)
         except ValueError:
             print("Ingresó un caracter inválido. Ingrese solo caracteres de tipo entero o decimal.")
-            
